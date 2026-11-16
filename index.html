@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tayyar Pre-Order Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Noto+Nastaliq+Urdu:wght@500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="top">
+  <span class="top-brand">Tayyar<small>campus pre-order prototype</small></span>
+  <div class="top-r">
+    <div class="seg" role="group" aria-label="Which screen to show">
+      <button data-act="layout:student" id="seg-student">Student</button>
+      <button data-act="layout:vendor" id="seg-vendor">Vendor</button>
+      <button data-act="layout:both" id="seg-both" class="only-wide">Side by side</button>
+    </div>
+    <button class="demobtn" id="demobtn" data-act="demo" aria-expanded="false" aria-controls="demo">Demo controls</button>
+  </div>
+</div>
+<div class="demo" id="demo" hidden>
+  <span>Demo time <b class="js-time">–</b> · <span class="js-mode">live</span></span>
+  <button class="tbtn" id="d-live" data-act="live" aria-pressed="true">Live clock</button>
+  <button class="tbtn" id="d-ff" data-act="ff" aria-pressed="false">Fast-forward ×20</button>
+  <input type="range" id="tc-range" min="480" max="1195" step="5" value="770" aria-label="Jump to another time of day">
+  <button class="tbtn" data-act="reset">Reset demo</button>
+  <span class="demo-note">For presenting only. These controls are not part of the app.</span>
+</div>
+<div class="stage" id="stage" data-layout="both">
+  <section class="phone" aria-label="Student app">
+    <div id="toast" aria-live="assertive"></div>
+    <div class="screen" id="screen">
+      <header class="hero" id="hero">
+        <div class="hero-row">
+          <span class="wordmark">Tayyar<i>.</i></span>
+          <span class="clockchip"><span class="livedot"></span><b class="js-time">–</b></span>
+        </div>
+        <div class="hero-main">
+          <h1>Skip the queue.<br>Order ahead on campus.</h1>
+          <div class="hero-art" id="hero-art"></div>
+        </div>
+        <div class="hero-search">
+          <label class="search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="q" type="search" placeholder="Search outlets or dishes" autocomplete="off" aria-label="Search outlets or dishes"></label>
+          <button class="sortbtn" id="sortbtn" data-act="sort" aria-pressed="false" aria-label="Show the shortest wait first"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg></button>
+        </div>
+      </header>
+      <div class="bar" id="bar"></div>
+      <section class="mapview" id="mapview" hidden>
+        <div class="mapwrap">
+          <svg id="mapsvg" viewBox="0 0 400 330" role="group" aria-label="Map of IBA Main Campus showing the queue at each food area"></svg>
+          <div class="mapclock"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="#fff" stroke-width="2" opacity=".35"/><line id="hh" x1="20" y1="20" x2="20" y2="11" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><line id="mh" x1="20" y1="20" x2="20" y2="6.5" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="20" r="2" fill="#fff"/></svg><div><b class="js-time">–</b><span class="js-mode">live</span></div></div>
+          <div class="maplegend"><span><i style="background:var(--ok)"></i>Short</span><span><i style="background:#D97706"></i>Moderate</span><span><i style="background:var(--busy)"></i>Long wait</span></div>
+          <div class="zoomer"><button data-act="zoom:in" aria-label="Zoom in">+</button><button data-act="zoom:out" aria-label="Zoom out">−</button><button data-act="mapreset" aria-label="Show the whole campus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
+        </div>
+        <div class="timecard">
+          <p class="h2">Typical busy times</p>
+          <p class="sub">Busiest from 12:30 to 2 pm, with a smaller rush around 4:30 pm. The red line is now.</p>
+          <svg class="curve" id="curve" viewBox="0 0 300 44" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="ticks"><span>8 am</span><span>11 am</span><span>2 pm</span><span>5 pm</span><span>8 pm</span></div>
+        </div>
+      </section>
+      <div class="body" id="body"></div>
+    </div>
+    <div class="cartbar" id="cartbar"></div>
+    <nav class="tabs" id="tabs" aria-label="App sections"></nav>
+    <div id="sheet"></div>
+  </section>
+  <section class="vendor" aria-label="Vendor counter screen">
+    <div class="v-head">
+      <div class="v-title"><p class="eyebrow"><span id="v-eyebrow">Vendor counter</span> · <bdi class="js-time">–</bdi></p><h2 id="v-name">Outlet</h2></div>
+      <label for="v-outlet">Outlet<select id="v-outlet"></select></label>
+      <div class="langseg" role="group" aria-label="Language"><button data-act="vlang:en" id="vl-en">English</button><button data-act="vlang:ur" id="vl-ur" class="ur" style="line-height:1.6">اردو</button></div>
+      <button class="vlock" id="v-lock" data-act="vlock" aria-label="Lock the vendor screen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button>
+    </div>
+    <div class="v-body" id="v-body"></div>
+  </section>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
